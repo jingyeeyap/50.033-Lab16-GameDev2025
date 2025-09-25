@@ -89,15 +89,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            // Debug.Log("Collided with goomba!");
             Time.timeScale = 0.0f;
-            GameOverScreen.SetActive(true);
+            GameOverScreen.SetActive(true);     // set the Game over screen to be active
         }
     }
 
     public void RestartButtonCallback(int input)
     {
-        // Debug.Log("Restart!");
         // reset everything
         ResetGame();
         // resume time
