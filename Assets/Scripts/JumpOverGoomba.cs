@@ -11,31 +11,56 @@ public class JumpOverGoomba : MonoBehaviour
 
     [System.NonSerialized]
     public int score = 0; // we don't want this to show up in the inspector
-
     private bool countScoreState = false;
     public Vector3 boxSize;
     public float maxDistance;
     public LayerMask layerMask;
+    private float jumpStartX;
+    public PlayerMovement playerMovement;
 
+    public void ResetState()
+    {
+        score = 0;
+        scoreText.text = "Score: 0";
+        countScoreState = false;
+    }
     void FixedUpdate()
     {
-        // mario jumps
-        if (Input.GetKeyDown("space") && onGroundCheck())
+        if (playerMovement.alive)
         {
-            onGroundState = false;
-            countScoreState = true;
+            // mario jumps
+            if (Input.GetKeyDown("space") && onGroundCheck())
+            {
+                onGroundState = false;
+                countScoreState = true;
+                jumpStartX = transform.position.x; // record where the jump started
+            }
+
+            // when jumping, and Goomba is near Mario and we haven't registered our score
+            // if (!onGroundState && countScoreState)
+            // {
+            //     if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
+            //     {
+            //         countScoreState = false;
+            //         score++;
+            //         scoreText.text = "Score: " + score.ToString();
+            //     }
+            // }
+
+            if (onGroundCheck() && countScoreState && onGroundState)
+            {
+                // check if Mario has crossed the Goomba during this jump
+                if ((jumpStartX < enemyLocation.position.x && transform.position.x > enemyLocation.position.x) ||
+                    (jumpStartX > enemyLocation.position.x && transform.position.x < enemyLocation.position.x))
+                {
+                    score++;
+                    scoreText.text = "Score: " + score.ToString();
+                    countScoreState = false; // reset for next jump
+                }
+            }
+
         }
 
-        // when jumping, and Goomba is near Mario and we haven't registered our score
-        if (!onGroundState && countScoreState)
-        {
-            if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
-            {
-                countScoreState = false;
-                score++;
-                scoreText.text = "Score: " + score.ToString();
-            }
-        }
     }
 
     void OnCollisionEnter2D(Collision2D col)
