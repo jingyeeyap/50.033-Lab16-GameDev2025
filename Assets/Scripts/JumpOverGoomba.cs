@@ -5,7 +5,7 @@ using TMPro;
 
 public class JumpOverGoomba : MonoBehaviour
 {
-    public Transform enemyLocation;
+    // public Transform enemyLocation;
     public TextMeshProUGUI scoreText;
     private bool onGroundState;
 
@@ -18,48 +18,88 @@ public class JumpOverGoomba : MonoBehaviour
     private float jumpStartX;
     public PlayerMovement playerMovement;
 
-    public void ResetState()
+    GameManager gameManager;
+    void Start()
     {
-        score = 0;
-        scoreText.text = "Score: 0";
+        gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
+    }
+
+    public void GameRestart()
+    {
+        // score = 0;
+        // scoreText.text = "Score: 0";
         countScoreState = false;
     }
     void FixedUpdate()
     {
-        if (playerMovement.alive)
+        // if (playerMovement.alive)
+        // {
+        //     // mario jumps
+        //     if (Input.GetKeyDown("space") && onGroundCheck())
+        //     {
+        //         onGroundState = false;
+        //         countScoreState = true;
+        //         jumpStartX = transform.position.x; // record where the jump started
+        //     }
+
+        //     // when jumping, and Goomba is near Mario and we haven't registered our score
+        //     // if (!onGroundState && countScoreState)
+        //     // {
+        //     //     if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
+        //     //     {
+        //     //         countScoreState = false;
+        //     //         score++;
+        //     //         scoreText.text = "Score: " + score.ToString();
+        //     //     }
+        //     // }
+
+        //     // if (onGroundCheck() && countScoreState && onGroundState)
+        //     if (countScoreState && !onGroundState)
+        //     {
+        //         // check if Mario has crossed the Goomba during this jump
+        //         if ((jumpStartX < enemyLocation.position.x && transform.position.x > enemyLocation.position.x) ||
+        //             (jumpStartX > enemyLocation.position.x && transform.position.x < enemyLocation.position.x))
+        //         {
+        //             // score++;
+        //             // scoreText.text = "Score: " + score.ToString();
+        //             gameManager.IncreaseScore(1); //
+        //             countScoreState = false; // reset for next jump
+        //         }
+        //     }
+
+        // }
+        // mario jumps
+        if (Input.GetKeyDown("space") && onGroundCheck())
         {
-            // mario jumps
-            if (Input.GetKeyDown("space") && onGroundCheck())
-            {
-                onGroundState = false;
-                countScoreState = true;
-                jumpStartX = transform.position.x; // record where the jump started
-            }
-
-            // when jumping, and Goomba is near Mario and we haven't registered our score
-            // if (!onGroundState && countScoreState)
-            // {
-            //     if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
-            //     {
-            //         countScoreState = false;
-            //         score++;
-            //         scoreText.text = "Score: " + score.ToString();
-            //     }
-            // }
-
-            if (onGroundCheck() && countScoreState && onGroundState)
-            {
-                // check if Mario has crossed the Goomba during this jump
-                if ((jumpStartX < enemyLocation.position.x && transform.position.x > enemyLocation.position.x) ||
-                    (jumpStartX > enemyLocation.position.x && transform.position.x < enemyLocation.position.x))
-                {
-                    score++;
-                    scoreText.text = "Score: " + score.ToString();
-                    countScoreState = false; // reset for next jump
-                }
-            }
-
+            onGroundState = false;
+            countScoreState = true;
+            jumpStartX = transform.position.x; // record where the jump started
         }
+
+        // when jumping, and Goomba is near Mario and we haven't registered our score
+        // if (!onGroundState && countScoreState)
+        // {
+        //     if (Mathf.Abs(transform.position.x - enemyLocation.position.x) < 0.5f)
+        //     {
+        //         countScoreState = false;
+        //         score++;
+        //         scoreText.text = "Score: " + score.ToString();
+        //     }
+        // }
+
+        // if (onGroundCheck() && countScoreState && onGroundState)
+        // if (countScoreState && !onGroundState)
+        // {
+        //     // check if Mario has crossed the Goomba during this jump
+        //     if ((jumpStartX < enemyLocation.position.x && transform.position.x > enemyLocation.position.x) ||
+        //         (jumpStartX > enemyLocation.position.x && transform.position.x < enemyLocation.position.x))
+        //     {
+        //         // score++;
+        //         // scoreText.text = "Score: " + score.ToString();
+        //         // gameManager.IncreaseScore(1); 
+        //         countScoreState = false; // reset for next jump
+        //     }
+        // }
 
     }
 
@@ -84,9 +124,9 @@ public class JumpOverGoomba : MonoBehaviour
     }
 
     // helper
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawCube(transform.position - transform.up * maxDistance, boxSize);
-    }
+    // void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.yellow;
+    //     Gizmos.DrawCube(transform.position - transform.up * maxDistance, boxSize);
+    // }
 }
