@@ -20,7 +20,7 @@ public class BrickManager : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && playerMovement.alive)
         {
             // get first contact point
             ContactPoint2D contact = collision.contacts[0];

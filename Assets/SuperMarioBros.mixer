@@ -600,7 +600,7 @@ AudioMixerGroupController:
   - {fileID: 5153280336894844153}
   - {fileID: -2560606005229614564}
   - {fileID: -272924343251411786}
-  m_UserColorIndex: 0
+  m_UserColorIndex: 1
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
