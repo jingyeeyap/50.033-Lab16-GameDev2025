@@ -95,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
                 enemy.Stomped();
 
                 // Add small bounce when stomping
-                marioBody.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+                marioBody.AddForce(Vector2.up * 15, ForceMode2D.Impulse);
 
                 // Increase score through GameManager
                 gameManager.IncreaseScore(1);
