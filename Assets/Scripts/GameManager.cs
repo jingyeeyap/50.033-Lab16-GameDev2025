@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     // events
     public UnityEvent gameStart;
     public UnityEvent gameRestart;
     public UnityEvent<int> scoreChange;
     public UnityEvent gameOver;
+    public Transform player; // Mario's Transform
 
     private int score = 0;
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         gameStart.Invoke();
         Time.timeScale = 1.0f;
     }

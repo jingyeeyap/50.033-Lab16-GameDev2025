@@ -17,6 +17,11 @@ public class BrickManager : MonoBehaviour
     //     }
     // }
 
+    void Start()
+    {
+        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+    }
+
 
     void OnCollisionEnter2D(Collision2D collision)
     {

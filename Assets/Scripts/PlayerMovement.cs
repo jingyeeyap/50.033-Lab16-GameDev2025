@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -25,6 +26,15 @@ public class PlayerMovement : MonoBehaviour
     GameManager gameManager;
     public AudioSource marioDeathAudio;
 
+    void Awake()
+    {
+        // other instructions
+        // subscribe to Game Restart event
+        // GameManager.instance.gameRestart.AddListener(GameRestart);
+    }
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +48,9 @@ public class PlayerMovement : MonoBehaviour
 
         // update animator state
         marioAnimator.SetBool("onGround", onGroundState);
+
+        // subscribe to scene manager scene change
+        SceneManager.activeSceneChanged += SetStartingPosition;
     }
 
     // Update is called once per frame
@@ -48,6 +61,17 @@ public class PlayerMovement : MonoBehaviour
             marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.linearVelocity.x));
         }
 
+    }
+
+    public void SetStartingPosition(Scene current, Scene next)
+    {
+
+        if (next.name == "World1-2")
+        {
+            // change the position accordingly in your World-1-2 case
+            Debug.Log("Mario moved scene!");
+            this.transform.position = new Vector3(-10.5f, -4f, 0f);
+        }
     }
 
     void FlipMarioSprite(int value)
