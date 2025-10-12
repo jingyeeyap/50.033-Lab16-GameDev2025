@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -11,41 +12,46 @@ public class GameManager : Singleton<GameManager>
     public UnityEvent<int> scoreChange;
     public UnityEvent gameOver;
     public Transform player; // Mario's Transform
-
-    private int score = 0;
+    public IntVariable gameScore;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         gameStart.Invoke();
+        gameScore.Value = 0;
         Time.timeScale = 1.0f;
+        // subscribe to scene manager scene change
+        SceneManager.activeSceneChanged += SceneSetup;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SceneSetup(Scene current, Scene next)
     {
-
+        gameStart.Invoke();
+        SetScore();
     }
 
     public void GameRestart()
     {
         // reset score
-        score = 0;
-        SetScore(score);
+        gameScore.Value = 0;
+        SetScore();
         gameRestart.Invoke();
         Time.timeScale = 1.0f;
-        ResetAllBrickAnimators();
+        // ResetAllBrickAnimators();
     }
 
     public void IncreaseScore(int increment)
     {
-        score += increment;
-        SetScore(score);
+        // score += increment;
+        // increase score by 1
+        gameScore.ApplyChange(increment);
+        SetScore();
     }
 
-    public void SetScore(int score)
+    public void SetScore()
     {
-        scoreChange.Invoke(score);
+        // invoke score change event with current score to update HUD
+        scoreChange.Invoke(gameScore.Value);
     }
 
 

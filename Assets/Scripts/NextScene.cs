@@ -6,13 +6,14 @@ using UnityEngine.SceneManagement;
 public class NextScene : MonoBehaviour
 {
     public string nextSceneName;
+    public GameObject HUD;
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
             Debug.Log("Change scene!");
-            DontDestroyOnLoad(other.gameObject);
+            // DontDestroyOnLoad(other.gameObject);
             StartCoroutine(LoadNextScene(other.gameObject));
         }
     }
@@ -28,7 +29,9 @@ public class NextScene : MonoBehaviour
         Scene nextScene = SceneManager.GetSceneByName(nextSceneName);
         if (nextScene.IsValid())
         {
-            SceneManager.MoveGameObjectToScene(player, nextScene);
+            // DontDestroyOnLoad(HUD);
+            // SceneManager.MoveGameObjectToScene(player, nextScene);
+            // SceneManager.MoveGameObjectToScene(HUD, nextScene);
             Debug.Log("Player moved to new scene!");
         }
         else

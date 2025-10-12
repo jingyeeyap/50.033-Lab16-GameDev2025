@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d17b639f61683514996da1e86b5780e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 6438799056124350019}
+  interactableObject: {fileID: 6438799056124350019}
   playerMovement: {fileID: 0}
 --- !u!1 &6378638811480634536
 GameObject:

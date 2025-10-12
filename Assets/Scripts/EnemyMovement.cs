@@ -9,6 +9,7 @@ public class EnemyMovement : MonoBehaviour
     private float maxOffset = 5.0f;
     private float enemyPatroltime = 2.0f;
     private int moveRight = -1;
+    public int moveSpeed = 10;
     private Vector2 velocity;
     private Rigidbody2D enemyBody;
     public Vector3 startPosition;
@@ -34,28 +35,33 @@ public class EnemyMovement : MonoBehaviour
         velocity = new Vector2((moveRight) * maxOffset / enemyPatroltime, 0);
     }
 
-    void Movegoomba()
-    {
-        enemyBody.MovePosition(enemyBody.position + velocity * Time.fixedDeltaTime);
-    }
-
     void FixedUpdate()
     {
         if (isAlive)
         {
-            if (Mathf.Abs(enemyBody.position.x - originalX) < maxOffset)
-            {
-                // move goomba
-                Movegoomba();
-            }
-            else
-            {
-                // change direction
-                moveRight *= -1;
-                ComputeVelocity();
-                Movegoomba();
-            }
+            enemyBody.linearVelocity = new Vector2(moveRight * moveSpeed, enemyBody.linearVelocity.y);
         }
+        else
+        {
+            enemyBody.linearVelocity = Vector2.zero;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!isAlive) return;
+
+        if (collision.gameObject.layer == 7)
+        {
+            // Flip direction
+            moveRight *= -1;
+
+            Vector3 scale = transform.localScale;
+            scale.x = Mathf.Abs(scale.x) * (moveRight == 1 ? 1 : -1);
+            transform.localScale = scale;
+        }
+
+        // If Mario stomps from above, handled elsewhere
     }
 
     public void GameRestart()

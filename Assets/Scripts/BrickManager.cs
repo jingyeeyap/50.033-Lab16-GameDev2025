@@ -2,26 +2,15 @@ using UnityEngine;
 
 public class BrickManager : MonoBehaviour
 {
-    public GameObject coin;
-    private AudioSource coinAudio;
+    public GameObject interactableObject;
+    private AudioSource objectAudio;
     float coinChance = 0.5f;
-    // public Animator brickOrBoxAnimator;
     public PlayerMovement playerMovement;
-
-    // void Update()
-    // {
-    //     if (playerMovement.restartQuestionBox)
-    //     {
-    //         this.GetComponent<Animator>().SetTrigger("restartGame");
-    //         playerMovement.restartQuestionBox = false;
-    //     }
-    // }
 
     void Start()
     {
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
-
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -54,9 +43,16 @@ public class BrickManager : MonoBehaviour
 
     void PlayCoinSound()
     {
-        coinAudio = coin.GetComponent<AudioSource>();
-        coinAudio.PlayOneShot(coinAudio.clip);
-        coin.GetComponent<Animator>().SetTrigger("startAnim");
+        objectAudio = interactableObject.GetComponent<AudioSource>();
+        objectAudio.PlayOneShot(objectAudio.clip);
+        interactableObject.GetComponent<Animator>().SetTrigger("startAnim");
+    }
+
+    void PlayMushroomSound()
+    {
+        objectAudio = interactableObject.GetComponent<AudioSource>();
+        objectAudio.PlayOneShot(objectAudio.clip);
+        interactableObject.GetComponent<Animator>().SetTrigger("spawn-mushroom");
     }
 
 }

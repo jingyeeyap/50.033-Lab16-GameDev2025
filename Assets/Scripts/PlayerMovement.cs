@@ -7,14 +7,15 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 10;
+    public GameConstants gameConstants;
+    float deathImpulse;
+    float upSpeed;
+    float maxSpeed;
+    float speed;
     private Rigidbody2D marioBody;
-    public float maxSpeed = 20;
-    public float upSpeed = 10;
     private bool onGroundState = true;
     private SpriteRenderer marioSprite;
     private bool faceRightState = true;
-    public float deathImpulse = 15;
     // for animation
     public Animator marioAnimator;
     // for audio
@@ -30,15 +31,20 @@ public class PlayerMovement : MonoBehaviour
     {
         // other instructions
         // subscribe to Game Restart event
-        // GameManager.instance.gameRestart.AddListener(GameRestart);
+        GameManager.instance.gameRestart.AddListener(GameRestart);
+        // subscribe to Game Restart event
     }
-
-
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
+
+        // Set constants
+        speed = gameConstants.speed;
+        maxSpeed = gameConstants.maxSpeed;
+        deathImpulse = gameConstants.deathImpulse;
+        upSpeed = gameConstants.upSpeed;
 
         // Set to be 30 FPS
         Application.targetFrameRate = 30;
@@ -65,12 +71,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetStartingPosition(Scene current, Scene next)
     {
-
         if (next.name == "World1-2")
         {
             // change the position accordingly in your World-1-2 case
             Debug.Log("Mario moved scene!");
-            this.transform.position = new Vector3(-10.5f, -4f, 0f);
+            // this.transform.position = new Vector3(-10.5f, -4f, 0f);
         }
     }
 
@@ -205,7 +210,7 @@ public class PlayerMovement : MonoBehaviour
     //     }
     // }
 
-    public void ResetGame()
+    public void GameRestart()
     {
         // reset position
         marioBody.transform.position = new Vector3(-5.33f, -4.69f, 0.0f);
