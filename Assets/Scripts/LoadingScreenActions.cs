@@ -26,6 +26,7 @@ public class LoadingSceneController : MonoBehaviour
 
     IEnumerator PlayIntro()
     {
+        Time.timeScale = 1f;
         // Step 1: Start walking
         marioAnimator.SetFloat("xSpeed", 0.06f);
 

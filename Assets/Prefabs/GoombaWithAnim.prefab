@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377c97e9ff039954c8c4e1ef5fef6a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 2
   startPosition: {x: 0, y: 0, z: 0}
   enemyAnimator: {fileID: 6668722271973053251}
 --- !u!61 &3747788929860851752
@@ -325,7 +326,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5050734066195486439}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -343,4 +344,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 2
+  m_Constraints: 6

@@ -34,8 +34,7 @@ public class CoinPowerup : BasePowerup
     {
         // rigidBody.constraints = RigidbodyConstraints2D.None;
         // rigidBody.freezeRotation = true;
-        PlayCoinSound();
-
+        ApplyPowerup(gameManager.player.GetComponent<PlayerMovement>());
         // rigidBody.AddForce(Vector2.right * 3, ForceMode2D.Impulse); // move to the right
     }
 
@@ -45,7 +44,6 @@ public class CoinPowerup : BasePowerup
         {
             objectAudio.PlayOneShot(objectAudio.clip);
             spawned = true;
-            gameManager.IncreaseScore(1);
         }
         // spawned = true;
         // this.GetComponent<Animator>().SetTrigger("startAnim");
@@ -55,6 +53,12 @@ public class CoinPowerup : BasePowerup
     public override void ApplyPowerup(MonoBehaviour i)
     {
         // TODO: do something with the object
+        PlayerMovement player = i as PlayerMovement;
+        if (player.alive)
+        {
+            PlayCoinSound();
+            gameManager.IncreaseScore(1);
+        }
     }
 
     public void GameRestart()

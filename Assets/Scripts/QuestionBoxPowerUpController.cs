@@ -23,7 +23,8 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Player" && !powerup.hasSpawned)
+        PlayerMovement player = other.gameObject.GetComponent<PlayerMovement>();
+        if (other.gameObject.tag == "Player" && !powerup.hasSpawned && player.alive)
         {
             // get first contact point
             ContactPoint2D contact = other.contacts[0];
@@ -35,7 +36,6 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
             if (contactNormal.y > 0.5f)
             {
                 // Debug.Log("Block hit from below!");
-
                 this.GetComponent<Animator>().SetTrigger("marioHit");
 
                 if (powerup.type == PowerupType.MagicMushroom)

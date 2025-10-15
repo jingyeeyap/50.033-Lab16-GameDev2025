@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform gameCamera;
     GameManager gameManager;
     public AudioSource marioDeathAudio;
+    [HideInInspector] public bool isInvincible = false;
 
     void Awake()
     {
@@ -131,11 +132,14 @@ public class PlayerMovement : MonoBehaviour
             }
             else // Mario hit from side
             {
-                // play death animation
-                marioAnimator.Play("mario-die");
-                marioAudio.PlayOneShot(marioDeathAudio.clip);
-                col.collider.enabled = false;
-                alive = false;
+                if (!isInvincible)
+                {
+                    // play death animation
+                    marioAnimator.Play("mario-die");
+                    marioAudio.PlayOneShot(marioDeathAudio.clip);
+                    col.collider.enabled = false;
+                    alive = false;
+                }
             }
         }
     }
@@ -246,6 +250,42 @@ public class PlayerMovement : MonoBehaviour
         // // set gameover scene
         // GameOverScreen.SetActive(true);     // set the Game over screen to be active
 
+    }
+
+    public IEnumerator Invincibility(float duration = 5f)
+    {
+        isInvincible = true;
+
+        int enemyLayer = LayerMask.NameToLayer("Enemies");
+        int playerLayer = gameObject.layer;
+
+        // Disable collision between Mario and enemies
+        Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, true);
+
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        Color[] colors = new Color[]
+        {
+            Color.yellow, Color.cyan, Color.magenta, Color.white
+        };
+
+        for (float t = 0; t < duration;)
+        {
+            sr.color = colors[Random.Range(0, colors.Length)];
+
+            float normalized = t / duration;
+            float currentRate = Mathf.Lerp(0.15f, 0.01f, normalized); // faster near end
+
+            yield return new WaitForSeconds(currentRate);
+            t += currentRate;
+        }
+
+        // Reset to normal
+        sr.color = Color.white;
+
+        // Re-enable collisions after time ends
+        Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+
+        isInvincible = false;
     }
 
 }

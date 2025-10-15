@@ -327,7 +327,7 @@ AudioSource:
   m_GameObject: {fileID: 8393956982180266677}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3167837048612251594, guid: 2ca5507b0d9922741889c5b06d560396, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: d885ffc842af744d89f7d595ffcc176a, type: 3}
   m_PlayOnAwake: 0
@@ -427,22 +427,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca7c0936e8bfeb41bcf1c5fcd85133c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parameter: 1
+  parameter: 0
   useInt:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: IncreaseScore
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   use:
     m_PersistentCalls:
       m_Calls:

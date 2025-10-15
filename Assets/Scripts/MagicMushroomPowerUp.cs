@@ -8,7 +8,7 @@ public class MagicMushroomPowerup : BasePowerup
 {
     // setup this object's type
     // instantiate variables
-    public AudioSource objectAudio;
+    public AudioSource objectAudio, pickUpAudio;
     Vector2 startingPos;
 
     Collider2D col;
@@ -37,7 +37,7 @@ public class MagicMushroomPowerup : BasePowerup
         if (col.gameObject.CompareTag("Player") && spawned)
         {
             // TODO: do something when colliding with Player
-
+            ApplyPowerup(col.gameObject.GetComponent<PlayerMovement>());
             // then destroy powerup (optional)
             DestroyPowerup();
 
@@ -66,7 +66,16 @@ public class MagicMushroomPowerup : BasePowerup
     public override void ApplyPowerup(MonoBehaviour i)
     {
         // TODO: do something with the object
-
+        PlayerMovement player = i as PlayerMovement;
+        if (player != null)
+        {
+            // Start invincibility
+            if (player.isInvincible == false)
+            {
+                pickUpAudio.PlayOneShot(pickUpAudio.clip);
+                player.StartCoroutine(player.Invincibility(5f));
+            }
+        }
     }
 
     public void GameRestart()

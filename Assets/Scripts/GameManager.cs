@@ -27,7 +27,15 @@ public class GameManager : Singleton<GameManager>
     public void SceneSetup(Scene current, Scene next)
     {
         gameStart.Invoke();
+
+        if (next.name == "MainMenu" || next.name == "LoadingScreen")
+        {
+            gameScore.Value = 0;
+        }
+
         SetScore();
+        Time.timeScale = 1.0f;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     public void GameRestart()
@@ -37,7 +45,6 @@ public class GameManager : Singleton<GameManager>
         SetScore();
         gameRestart.Invoke();
         Time.timeScale = 1.0f;
-        // ResetAllBrickAnimators();
     }
 
     public void IncreaseScore(int increment)
@@ -59,28 +66,5 @@ public class GameManager : Singleton<GameManager>
     {
         Time.timeScale = 0.0f;
         gameOver.Invoke();
-    }
-
-    public Transform obstacles; // assign in Inspector (e.g. root object)
-    void ResetAllBrickAnimators()
-    {
-        if (obstacles == null)
-        {
-            Debug.LogWarning("No parent assigned!");
-            return;
-        }
-
-        Animator[] animators = obstacles.GetComponentsInChildren<Animator>(true);
-        // (true) includes disabled objects too
-
-        foreach (Animator anim in animators)
-        {
-            if (anim.gameObject.CompareTag("QuestionBox"))
-            {
-                anim.SetTrigger("gameRestart");
-                // clear it immediately so it won’t interfere with other transitions
-                anim.ResetTrigger("marioHit");
-            }
-        }
     }
 }
