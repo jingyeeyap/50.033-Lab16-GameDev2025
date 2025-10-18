@@ -6,6 +6,8 @@ public class GameConstants : ScriptableObject
     // lives
     public int maxLives;
 
+    public bool marioAlive;
+
     // Mario's movement
     public int speed;
     public int maxSpeed;

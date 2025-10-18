@@ -20,6 +20,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/World1-2.unity
     guid: 84f8aa6c09b74e34bbc5a0c4b23ddd41
+  - enabled: 1
+    path: Assets/Week5/Scenes/Lab5World1-1.unity
+    guid: 9ef4799405e790a40ba636f27cd3afdc
+  - enabled: 1
+    path: Assets/Week5/Scenes/Lab5World1-2.unity
+    guid: 82572304b1191194182e9dcc73ce1660
+  - enabled: 1
+    path: Assets/Week5/Scenes/LoadingScreenLab5.unity
+    guid: f05922641b785354c8b576b15cabeadc
+  - enabled: 1
+    path: Assets/Week5/Scenes/MainMenuLab5.unity
+    guid: 855ec28b8f3585940a2f49e687b4246a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

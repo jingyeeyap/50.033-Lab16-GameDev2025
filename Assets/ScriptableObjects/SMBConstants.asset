@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SMBConstants
   m_EditorClassIdentifier: 
   maxLives: 10
+  marioAlive: 1
   speed: 150
   maxSpeed: 7
   upSpeed: 30

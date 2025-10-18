@@ -27,9 +27,8 @@ public class LoadingSceneController : MonoBehaviour
     IEnumerator PlayIntro()
     {
         Time.timeScale = 1f;
-        // Step 1: Start walking
-        marioAnimator.SetFloat("xSpeed", 0.06f);
 
+        marioAnimator.SetFloat("xSpeed", 0.06f);
 
         while (mario.position.x < 0f)
         {
@@ -37,19 +36,16 @@ public class LoadingSceneController : MonoBehaviour
             yield return null;
         }
 
-        // Step 2: Stop walking
         marioAnimator.SetFloat("xSpeed", 0f);
 
         yield return new WaitForSeconds(0.3f); // tiny pause before jump
 
-        // Step 3: Jump
         marioAnimator.SetBool("onGround", false);
         yield return StartCoroutine(JumpMario());
         marioAnimator.SetBool("onGround", true);
-        // Step 4: Show text
+
         yield return StartCoroutine(FadeInText());
 
-        // Step 5: Wait and transition to next scene
         yield return new WaitForSeconds(1.5f);
         StartCoroutine(Fade());
     }

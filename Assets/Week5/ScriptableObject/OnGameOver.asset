@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 007e18e273c735d4d8e8a11e1e4fd2d4, type: 3}
-  m_Name: GameScore
+  m_Script: {fileID: 11500000, guid: c9ed3a5f5d4000a4d957990fcb0b040c, type: 3}
+  m_Name: OnGameOver
   m_EditorClassIdentifier: 
-  DeveloperDescription: This object holds the current game score
-  previousHighestValue: 1
