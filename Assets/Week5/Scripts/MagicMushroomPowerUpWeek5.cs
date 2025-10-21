@@ -72,46 +72,28 @@ public class MagicMushroomPowerupWeek5 : BasePowerup
 
     private IEnumerator AutoDestroyAfterDelay(float totalTime, float blinkDuration)
     {
+        bool localSpawned = spawned;  // capture current instance state
         float blinkStartTime = totalTime - blinkDuration;
-
-        // Wait until blink phase starts
         yield return new WaitForSeconds(blinkStartTime);
 
         float elapsed = 0f;
-        while (elapsed < blinkDuration && spawned)
+        while (elapsed < blinkDuration && localSpawned)
         {
             float normalized = elapsed / blinkDuration;
             float blinkInterval = Mathf.Lerp(0.2f, 0.05f, normalized);
-
-            if (spriteRenderer)
-                spriteRenderer.enabled = !spriteRenderer.enabled; // toggle visibility
-
+            if (spriteRenderer) spriteRenderer.enabled = !spriteRenderer.enabled;
             yield return new WaitForSeconds(blinkInterval);
             elapsed += blinkInterval;
         }
 
-        // Ensure sprite visible before destruction
-        if (spriteRenderer)
-            spriteRenderer.enabled = true;
-
-        if (spawned)
-            DestroyPowerup();
+        if (spriteRenderer) spriteRenderer.enabled = true;
+        if (localSpawned) DestroyPowerup();
     }
+
 
     // interface implementation
     public override void ApplyPowerup(MonoBehaviour i)
     {
-        // TODO: do something with the object
-        // PlayerMovement player = i as PlayerMovement;
-        // if (player != null)
-        // {
-        //     // Start invincibility
-        //     if (player.isInvincible == false)
-        //     {
-        //         pickUpAudio.PlayOneShot(pickUpAudio.clip);
-        //         // player.StartCoroutine(player.Invincibility(5f));
-        //     }
-        // }
         MarioStateController mario;
         bool result = i.TryGetComponent<MarioStateController>(out mario);
         if (result)
@@ -130,7 +112,6 @@ public class MagicMushroomPowerupWeek5 : BasePowerup
         // Debug.Log("reset pos: " + startingPos);
         transform.GetChild(0).GetComponent<Animator>().SetTrigger("gameRestart");
         transform.localPosition = startingPos;
-        // transform.GetChild(0).transform.position = Vector3.zero;
     }
 
     IEnumerator EnableRbAndCollider()

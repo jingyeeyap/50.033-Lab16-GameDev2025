@@ -264,8 +264,16 @@ public class PlayerMovementWeek5 : MonoBehaviour
         // reset sprite direction
         faceRightState = true;
         marioSprite.flipX = false;
-        // reset animation
-        marioAnimator.SetTrigger("gameRestart");
+
+        for (int i = 0; i < marioAnimator.parameterCount; i++)
+        {
+            if (marioAnimator.GetParameter(i).name == "gameRestart")
+            {
+                // reset animation
+                marioAnimator.SetTrigger("gameRestart");
+                break;
+            }
+        }
 
         // // reset camera position
         // gameCamera.position = new Vector3(0, 0, -10);
