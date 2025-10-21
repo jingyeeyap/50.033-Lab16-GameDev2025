@@ -20,6 +20,8 @@ GameObject:
   - component: {fileID: 7276643002070730235}
   - component: {fileID: 6368559688606285620}
   - component: {fileID: 8928274059193895391}
+  - component: {fileID: 8509146128550619184}
+  - component: {fileID: 4299420534886522307}
   m_Layer: 0
   m_Name: Mario
   m_TagString: Player
@@ -181,7 +183,7 @@ Animator:
   m_GameObject: {fileID: 1483352343111261303}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c35836937b8895f4e88503ff79e12c9f, type: 2}
+  m_Controller: {fileID: 9100000, guid: ecedc6b98bc0c0648850b192689d00bf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -395,6 +397,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b349d4bf-ef82-46d8-a236-7a501a41c67f
     m_ActionName: 'gameplay/point[/Mouse/leftButton,/Mouse/position]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4107627781893044060}
+        m_TargetAssemblyTypeName: ActionManager, Assembly-CSharp
+        m_MethodName: OnFireAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4cfc4bbb-a09b-4108-9529-5bb5ddf9feb2
+    m_ActionName: 'gameplay/fire[/Keyboard/z]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: SuperMarioBros
   m_DefaultActionMap: gameplay
@@ -457,6 +475,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  fire:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 942298785983638489}
+        m_TargetAssemblyTypeName: PlayerMovementWeek5, Assembly-CSharp
+        m_MethodName: Fire
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &942298785983638489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,9 +505,7 @@ MonoBehaviour:
   gameConstants: {fileID: 11400000, guid: ce37c5927c90efc4e9ed08aad50d4bdb, type: 2}
   marioAnimator: {fileID: 8752222243058085191}
   marioAudio: {fileID: 4669506748924607074}
-  gameCamera: {fileID: 0}
   marioDeathAudio: {fileID: 3025826048186284406}
-  isInvincible: 0
   onGameOver:
     m_PersistentCalls:
       m_Calls:
@@ -490,6 +521,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  marioFaceRight: {fileID: 11400000, guid: 30703ef13914afa48914221fff41a374, type: 2}
 --- !u!114 &7276643002070730235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,6 +540,30 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 942298785983638489}
         m_TargetAssemblyTypeName: PlayerMovementWeek5, Assembly-CSharp
+        m_MethodName: GameRestart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8509146128550619184}
+        m_TargetAssemblyTypeName: MarioStateController, Assembly-CSharp
+        m_MethodName: GameRestart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4299420534886522307}
+        m_TargetAssemblyTypeName: BuffStateController, Assembly-CSharp
         m_MethodName: GameRestart
         m_Mode: 1
         m_Arguments:
@@ -574,6 +630,49 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8509146128550619184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483352343111261303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e44685699e90c0e489fac1d346cbb511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startState: {fileID: 11400000, guid: f80d2a5f280ff2842bf548e6c7490c73, type: 2}
+  previousState: {fileID: 0}
+  currentState: {fileID: 0}
+  remainState: {fileID: 11400000, guid: 8ba3fc5f25ac2cf41a26b5748611f04b, type: 2}
+  transitionStateChanged: 0
+  stateTimeElapsed: 0
+  isActive: 1
+  currentPowerupType: -1
+  shouldBeNextState: -1
+  gameConstants: {fileID: 11400000, guid: ce37c5927c90efc4e9ed08aad50d4bdb, type: 2}
+--- !u!114 &4299420534886522307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483352343111261303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1679cad8bc3df5f40bb9e0d52353390f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startState: {fileID: 11400000, guid: a77146fc13891ea48b1756fb28450f05, type: 2}
+  previousState: {fileID: 0}
+  currentState: {fileID: 0}
+  remainState: {fileID: 11400000, guid: 8ba3fc5f25ac2cf41a26b5748611f04b, type: 2}
+  transitionStateChanged: 0
+  stateTimeElapsed: 0
+  isActive: 1
+  currentPowerupType: -1
+  shouldBeNextState: -1
 --- !u!1 &9029186028788871793
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,7 +699,7 @@ Transform:
   m_GameObject: {fileID: 9029186028788871793}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.2800002, y: 0.0073189735, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -50,6 +50,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "fire",
+                    "type": "Button",
+                    "id": "4cfc4bbb-a09b-4108-9529-5bb5ddf9feb2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -184,6 +193,17 @@
                     "action": "point",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "45b57a49-cb71-4ca1-856f-3222bf9e0eaa",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";SuperMarioBros",
+                    "action": "fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

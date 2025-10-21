@@ -12,6 +12,7 @@ public class CoinPowerupWeek5 : BasePowerup
     [System.NonSerialized] public bool playSound = true;
     // GameManager gameManager;
     public UnityEvent<IPowerup> powerupCollected;
+    public GameConstants gameConstants;
     // public UnityEvent onIncrementScore;
 
     protected override void Start()
@@ -44,8 +45,11 @@ public class CoinPowerupWeek5 : BasePowerup
         // rigidBody.constraints = RigidbodyConstraints2D.None;
         // rigidBody.freezeRotation = true;
         // ApplyPowerup(gameManager.player.GetComponent<PlayerMovementWeek5>());
-        powerupCollected.Invoke(this);
-        PlayCoinSound();
+        if (gameConstants.marioAlive)
+        {
+            powerupCollected.Invoke(this);
+            PlayCoinSound();
+        }
         // rigidBody.AddForce(Vector2.right * 3, ForceMode2D.Impulse); // move to the right
     }
 

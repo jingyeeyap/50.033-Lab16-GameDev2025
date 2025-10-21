@@ -27,8 +27,9 @@ public class PlayerMovementWeek5 : MonoBehaviour
     public Transform gameCamera;
     // GameManager gameManager;
     public AudioSource marioDeathAudio;
-    [HideInInspector] public bool isInvincible = false;
+    // [HideInInspector] public bool isInvincible = false;
     public UnityEvent onGameOver;
+    public BoolVariable marioFaceRight;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +53,8 @@ public class PlayerMovementWeek5 : MonoBehaviour
 
         // subscribe to scene manager scene change
         SceneManager.activeSceneChanged += SetStartingPosition;
+
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Projectile"), true);
     }
 
     // Update is called once per frame
@@ -59,7 +62,15 @@ public class PlayerMovementWeek5 : MonoBehaviour
     {
         if (gameConstants.marioAlive)
         {
-            marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.linearVelocity.x));
+            for (int i = 0; i < marioAnimator.parameterCount; i++)
+            {
+                if (marioAnimator.GetParameter(i).name == "xSpeed")
+                {
+                    marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.linearVelocity.x));
+                    break;
+                }
+            }
+
         }
 
     }
@@ -78,6 +89,7 @@ public class PlayerMovementWeek5 : MonoBehaviour
     {
         if (value == -1 && faceRightState)
         {
+            updateMarioShouldFaceRight(false);
             faceRightState = false;
             marioSprite.flipX = true;
             if (marioBody.linearVelocity.x > 0.05f)
@@ -87,11 +99,18 @@ public class PlayerMovementWeek5 : MonoBehaviour
 
         else if (value == 1 && !faceRightState)
         {
+            updateMarioShouldFaceRight(true);
             faceRightState = true;
             marioSprite.flipX = false;
             if (marioBody.linearVelocity.x < -0.05f)
                 marioAnimator.SetTrigger("onSkid");
         }
+    }
+
+    private void updateMarioShouldFaceRight(bool value)
+    {
+        faceRightState = value;
+        marioFaceRight.SetValue(faceRightState);
     }
 
     int collisionLayerMask = (1 << 3) | (1 << 6) | (1 << 7);
@@ -140,15 +159,13 @@ public class PlayerMovementWeek5 : MonoBehaviour
 
     public void DamageMario()
     {
-        if (!isInvincible)
-        {
-            // play death animation
-            marioAnimator.Play("mario-die");
-            marioAudio.PlayOneShot(marioDeathAudio.clip);
-            // col.collider.enabled = false;
-            // GetComponent<Collider2D>().enabled = false;
-            gameConstants.marioAlive = false;
-        }
+        GetComponent<MarioStateController>().SetPowerup(PowerupType.Damage);
+        // play death animation
+        // marioAnimator.Play("mario-die");
+        // marioAudio.PlayOneShot(marioDeathAudio.clip);
+        // // col.collider.enabled = false;
+        // // GetComponent<Collider2D>().enabled = false;
+        // gameConstants.marioAlive = false;
     }
 
     private bool moving = false;
@@ -210,6 +227,25 @@ public class PlayerMovementWeek5 : MonoBehaviour
         }
     }
 
+    public void Fire()
+    {
+        // Get MarioStateController attached to Mario
+        MarioStateController stateController = GetComponent<MarioStateController>();
+
+        if (stateController != null &&
+            stateController.currentState != null &&
+            stateController.currentState.name == "FireMario")
+        {
+            Debug.Log("Firing fireball!");
+            stateController.Fire();
+        }
+        else
+        {
+            Debug.Log("Cannot fire: not in FireMario state.");
+        }
+    }
+
+
     // void OnTriggerEnter2D(Collider2D other)
     // {
     //     if (other.gameObject.CompareTag("Enemy") && alive)
@@ -246,7 +282,9 @@ public class PlayerMovementWeek5 : MonoBehaviour
 
     void PlayDeathImpulse()
     {
+        gameConstants.marioAlive = false;
         marioBody.AddForce(Vector2.up * deathImpulse, ForceMode2D.Impulse);
+        marioDeathAudio.PlayOneShot(marioDeathAudio.clip);
     }
 
     void GameOverScene()
@@ -262,7 +300,7 @@ public class PlayerMovementWeek5 : MonoBehaviour
 
     public void FilterAndCastPowerup(IPowerup powerup)
     {
-        if (powerup.powerupType == PowerupType.MagicMushroom)
+        if (powerup.powerupType == PowerupType.StarMan)
         {
             StartCoroutine(Invincibility(5f));
         }
@@ -270,7 +308,7 @@ public class PlayerMovementWeek5 : MonoBehaviour
 
     public IEnumerator Invincibility(float duration = 5f)
     {
-        isInvincible = true;
+        // isInvincible = true;
 
         int enemyLayer = LayerMask.NameToLayer("Enemies");
         int playerLayer = gameObject.layer;
@@ -301,7 +339,9 @@ public class PlayerMovementWeek5 : MonoBehaviour
         // Re-enable collisions after time ends
         Physics2D.IgnoreLayerCollision(playerLayer, enemyLayer, false);
 
-        isInvincible = false;
+        // isInvincible = false;
     }
+
+
 
 }

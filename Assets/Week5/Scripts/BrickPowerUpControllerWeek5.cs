@@ -10,10 +10,11 @@ public class BrickPowerupControllerWeek5 : MonoBehaviour, IPowerupController
     float coinChance = 0.5f;
     public BasePowerup powerup; // reference to this brick's powerup
     public UnityEvent<bool> onPlayCoinSoundBrick;
+    public GameConstants gameConstants;
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && gameConstants.marioAlive)
         {
             // get first contact point
             ContactPoint2D contact = other.contacts[0];

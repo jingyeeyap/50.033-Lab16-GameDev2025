@@ -25,9 +25,10 @@ public class QuestionBoxPowerupControllerWeek5 : MonoBehaviour, IPowerupControll
                 // Debug.Log("Block hit from below!");
                 this.GetComponent<Animator>().SetTrigger("marioHit");
 
-                if (powerup.type == PowerupType.MagicMushroom)
+                if (powerup.type == PowerupType.MagicMushroom || powerup.type == PowerupType.FireFlower ||
+                powerup.type == PowerupType.StarMan)
                 {
-                    powerup.transform.GetChild(0).GetComponent<Animator>().SetTrigger("spawn-mushroom");
+                    powerup.transform.GetChild(0).GetComponent<Animator>().SetTrigger("spawn");
                 }
                 else
                 {

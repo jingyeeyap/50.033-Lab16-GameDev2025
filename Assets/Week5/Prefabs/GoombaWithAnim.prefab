@@ -403,3 +403,4 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  gameConstants: {fileID: 11400000, guid: ce37c5927c90efc4e9ed08aad50d4bdb, type: 2}

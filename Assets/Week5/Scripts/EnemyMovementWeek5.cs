@@ -19,6 +19,7 @@ public class EnemyMovementWeek5 : MonoBehaviour
     public Animator enemyAnimator;
     public UnityEvent<int> onIncrementScore;
     public UnityEvent damagePlayer;
+    public GameConstants gameConstants;
 
     void Awake()
     {
@@ -53,7 +54,7 @@ public class EnemyMovementWeek5 : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!isAlive) return;
+        if (!isAlive || !gameConstants.marioAlive) return;
 
         if (collision.gameObject.layer == 7)
         {
@@ -67,26 +68,28 @@ public class EnemyMovementWeek5 : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            Rigidbody2D marioBody = collision.gameObject.GetComponent<Rigidbody2D>();
+            ContactPoint2D contact = collision.contacts[0];
 
-            // Check if Mario is above and moving downward
-            bool isAbove = collision.transform.position.y > transform.position.y + 0.2f;
-            bool isFalling = marioBody.linearVelocity.y <= 0;
+            // Check if contact came from above (normal pointing downward)
+            bool hitFromAbove = contact.normal.y < -0.5f;
 
-            if (isAbove && isFalling)
+            if (hitFromAbove)
             {
                 Stomped();
-                // Small bounce for Mario
+                Rigidbody2D marioBody = collision.gameObject.GetComponent<Rigidbody2D>();
                 marioBody.linearVelocity = new Vector2(marioBody.linearVelocity.x, 15f);
-                onIncrementScore.Invoke(1);
             }
             else
             {
                 damagePlayer.Invoke();
             }
-            GetComponent<Collider2D>().enabled = false;
         }
 
+        if (collision.gameObject.CompareTag("Fireball"))
+        {
+            enemyAnimator.SetTrigger("goomba-killed-fireball");
+            AfterDeathEvents();
+        }
 
         // If Mario stomps from above, handled elsewhere
     }
@@ -101,12 +104,19 @@ public class EnemyMovementWeek5 : MonoBehaviour
         gameObject.transform.GetChild(0).gameObject.SetActive(true);
         this.GetComponent<Collider2D>().enabled = true;
         isAlive = true;
+
+        enemyAnimator.SetTrigger("gameRestart");
     }
 
     public void Stomped()
     {
         enemyAnimator.SetTrigger("goomba-killed");
 
+        AfterDeathEvents();
+    }
+
+    public void AfterDeathEvents()
+    {
         // Disable collision so Mario can pass through
         if (this.GetComponent<Collider2D>() != null)
         {
@@ -114,6 +124,7 @@ public class EnemyMovementWeek5 : MonoBehaviour
         }
 
         isAlive = false;
+        onIncrementScore.Invoke(1);
     }
 
 }

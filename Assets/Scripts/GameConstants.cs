@@ -5,7 +5,6 @@ public class GameConstants : ScriptableObject
 {
     // lives
     public int maxLives;
-
     public bool marioAlive;
 
     // Mario's movement
@@ -14,6 +13,7 @@ public class GameConstants : ScriptableObject
     public int upSpeed;
     public int deathImpulse;
     public Vector3 marioStartingPosition;
+    public float flickerInterval;
 
     // Goomba's movement
     public float goombaPatrolTime;

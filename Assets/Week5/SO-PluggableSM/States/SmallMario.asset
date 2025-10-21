@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811c8d3b700cedc4e823ff13d2261aa1, type: 3}
+  m_Name: SmallMario
+  m_EditorClassIdentifier: 
+  setupActions:
+  - {fileID: 11400000, guid: f502041071608bd40b296f649ee670c4, type: 2}
+  - {fileID: 11400000, guid: 70db4de90f819a2428b0d9d4ec0f097c, type: 2}
+  actions: []
+  eventTriggeredActions: []
+  exitActions: []
+  transitions:
+  - decision: {fileID: 11400000, guid: f7f6dc3b7807a6843b7357e63cb1f043, type: 2}
+    trueState: {fileID: 11400000, guid: 6410fa6376ba0f945a41341a9b3b6ee6, type: 2}
+    falseState: {fileID: 11400000, guid: 8ba3fc5f25ac2cf41a26b5748611f04b, type: 2}
+  - decision: {fileID: 11400000, guid: 4771b2f58a29ea04d921d1c8f927c717, type: 2}
+    trueState: {fileID: 11400000, guid: 0955a39239da7ec46a2da8b8eaf85c6f, type: 2}
+    falseState: {fileID: 11400000, guid: 8ba3fc5f25ac2cf41a26b5748611f04b, type: 2}
+  sceneGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

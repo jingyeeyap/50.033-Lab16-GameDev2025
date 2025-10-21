@@ -59,7 +59,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: spawn-mushroom
+    m_ConditionEvent: spawn
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2014929967229873930}
@@ -84,7 +84,7 @@ AnimatorController:
   m_Name: Mushroom
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: spawn-mushroom
+  - m_Name: spawn
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0

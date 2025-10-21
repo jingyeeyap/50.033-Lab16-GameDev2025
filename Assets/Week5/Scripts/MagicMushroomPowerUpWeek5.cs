@@ -1,7 +1,6 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,14 +11,16 @@ public class MagicMushroomPowerupWeek5 : BasePowerup
     public AudioSource objectAudio, pickUpAudio;
     Vector2 startingPos;
     Collider2D col;
+    SpriteRenderer spriteRenderer;
     public UnityEvent<IPowerup> powerupCollected;
     protected override void Start()
     {
         base.Start(); // call base class Start()
-        this.type = PowerupType.MagicMushroom;
+        // this.type = PowerupType.MagicMushroom;
         startingPos = transform.localPosition;
 
         col = GetComponent<Collider2D>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     void FixedUpdate()
@@ -38,6 +39,7 @@ public class MagicMushroomPowerupWeek5 : BasePowerup
         {
             // TODO: do something when colliding with Player
             // ApplyPowerup(col.gameObject.GetComponent<PlayerMovement>());
+            ApplyPowerup(col.gameObject.GetComponent<MonoBehaviour>());
             powerupCollected.Invoke(this);
             // then destroy powerup (optional)
             DestroyPowerup();
@@ -59,23 +61,62 @@ public class MagicMushroomPowerupWeek5 : BasePowerup
         StartCoroutine(EnableRbAndCollider());
         if (spawned == false) objectAudio.PlayOneShot(objectAudio.clip);
         spawned = true;
+
+        int enemyLayer = LayerMask.NameToLayer("Enemies");
+        int powerupLayer = gameObject.layer;
+        Physics2D.IgnoreLayerCollision(powerupLayer, enemyLayer, true);
+
+        StartCoroutine(AutoDestroyAfterDelay(10f, 2f));
         // powerupCollected.Invoke(this);
     }
 
+    private IEnumerator AutoDestroyAfterDelay(float totalTime, float blinkDuration)
+    {
+        float blinkStartTime = totalTime - blinkDuration;
+
+        // Wait until blink phase starts
+        yield return new WaitForSeconds(blinkStartTime);
+
+        float elapsed = 0f;
+        while (elapsed < blinkDuration && spawned)
+        {
+            float normalized = elapsed / blinkDuration;
+            float blinkInterval = Mathf.Lerp(0.2f, 0.05f, normalized);
+
+            if (spriteRenderer)
+                spriteRenderer.enabled = !spriteRenderer.enabled; // toggle visibility
+
+            yield return new WaitForSeconds(blinkInterval);
+            elapsed += blinkInterval;
+        }
+
+        // Ensure sprite visible before destruction
+        if (spriteRenderer)
+            spriteRenderer.enabled = true;
+
+        if (spawned)
+            DestroyPowerup();
+    }
 
     // interface implementation
     public override void ApplyPowerup(MonoBehaviour i)
     {
         // TODO: do something with the object
-        PlayerMovement player = i as PlayerMovement;
-        if (player != null)
+        // PlayerMovement player = i as PlayerMovement;
+        // if (player != null)
+        // {
+        //     // Start invincibility
+        //     if (player.isInvincible == false)
+        //     {
+        //         pickUpAudio.PlayOneShot(pickUpAudio.clip);
+        //         // player.StartCoroutine(player.Invincibility(5f));
+        //     }
+        // }
+        MarioStateController mario;
+        bool result = i.TryGetComponent<MarioStateController>(out mario);
+        if (result)
         {
-            // Start invincibility
-            if (player.isInvincible == false)
-            {
-                pickUpAudio.PlayOneShot(pickUpAudio.clip);
-                // player.StartCoroutine(player.Invincibility(5f));
-            }
+            mario.SetPowerup(this.powerupType);
         }
     }
 
