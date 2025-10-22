@@ -100,6 +100,7 @@ public class MagicMushroomPowerupWeek5 : BasePowerup
         {
             mario.SetPowerup(this.powerupType);
         }
+        pickUpAudio.PlayOneShot(pickUpAudio.clip);
     }
 
     public void GameRestart()

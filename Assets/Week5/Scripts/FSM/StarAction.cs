@@ -5,11 +5,15 @@ using UnityEngine;
 public class StarAction : Action
 {
     public float duration = 5f;
+    public AudioClip invincibilityStart;
 
     public override void Act(StateController controller)
     {
         // Start the coroutine on the controller (which IS a MonoBehaviour)
         controller.StartCoroutine(Invincibility(controller));
+        BuffStateController b = (BuffStateController)controller;
+        b.gameObject.GetComponent<AudioSource>().time = 0.2f; // start playback 0.8s into the clip
+        b.gameObject.GetComponent<AudioSource>().PlayOneShot(invincibilityStart);
     }
 
     private IEnumerator Invincibility(StateController controller)

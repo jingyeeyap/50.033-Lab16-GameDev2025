@@ -1,6 +1,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -52,6 +53,7 @@ public class FireFlowerPowerupWeek5 : BasePowerup
         {
             mario.SetPowerup(this.powerupType);
         }
+        pickUpAudio.PlayOneShot(pickUpAudio.clip);
     }
 
     public void GameRestart()

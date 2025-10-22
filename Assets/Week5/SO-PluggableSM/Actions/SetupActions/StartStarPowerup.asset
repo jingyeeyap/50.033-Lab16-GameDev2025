@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: StartStarPowerup
   m_EditorClassIdentifier: 
   duration: 10
+  invincibilityStart: {fileID: 8300000, guid: 26301d2e86e99420599e315297a825df, type: 3}
